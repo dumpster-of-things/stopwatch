@@ -22,29 +22,33 @@
     </style>
   </head>
   <body>
-    <button id=8 class="_" onclick="initimer(this)">0</button><button id=7 class="_" onclick="initimer(this)">0</button><a class="_">:</a><button id=6 class="_" onclick="initimer(this)">0</button><button id=5 class="_" onclick="initimer(this)">0</button><a class="_">:</a><button id=4 class="_" onclick="initimer(this)">0</button><button id=3 class="_" onclick="initimer(this)">0</button><a class="_">.</a><button id=2 class="_" onclick="initimer(this)">0</button><button id=1 class="_" onclick="initimer(this)">0</button><button id=0 class="_" onclick="initimer(this)">0</button>
-    <div id="timer" class="stopwatch" onclick="toggleTimer()">00:00:00:000</div>
+    <div id="timer" class="stopwatch" onclick="toggleTimer()">00:00:00.000</div>
+    <button id=8 class="_" ondblclick="setimer(this)" onclick="initimer(this)">0</button><button id=7 class="_" ondblclick="setimer(this)" onclick="initimer(this)">0</button><a class="_">:</a><button id=6 class="_" ondblclick="setimer(this)" onclick="initimer(this)">0</button><button id=5 class="_" ondblclick="setimer(this)" onclick="initimer(this)">0</button><a class="_">:</a><button id=4 class="_" ondblclick="setimer(this)" onclick="initimer(this)">0</button><button id=3 class="_" ondblclick="setimer(this)" onclick="initimer(this)">0</button><a class="_">.</a><button id=2 class="_" ondblclick="setimer(this)" onclick="initimer(this)">0</button><button id=1 class="_" ondblclick="setimer(this)" onclick="initimer(this)">0</button><button id=0 class="_" ondblclick="setimer(this)" onclick="initimer(this)">0</button>
     <script>
       var timerId;
       var isRunning = false;
       var startTime;
       var elapsedTime = 0;
-      var rate = 100;
+      var rate = 1000;
+      var restrictimer = false;
       function initimer(b) {
         rate = b.id < 1 ? 1 : 10**b.id ;
         elements = document.getElementsByClassName(b.className);
         for (var i = 0; i < elements.length; i++){
           elements[i].style.display = "none";
         }
-        var x = document.getElementById('timer');
-        x.style.display = "unset";
-        //toggleTimer();
+        document.getElementById("timer").style.display = "unset";
+        toggleTimer();
+      }
+      function setimer(b) {
+        restrictimer = true;
+        //initimer(b)
       }
       function toggleTimer() {
-        if (isRunning) {// Pause the timer
+        if (isRunning) {
           clearInterval(timerId);
           isRunning = false;
-        } else {// Resume or start the timer
+        } else {
           isRunning = true;
           startTime = Date.now() - elapsedTime;
           timerId = setInterval(function() {
@@ -55,17 +59,34 @@
       }
       function updateTimer(currentTime) {
         var timerElement = document.getElementById('timer');
-        elapsedTime = currentTime; // Update elapsed time
-        let h,m,s,z;
-        h = Math.floor(currentTime/1000/60/60);
-        if (h <= 9) { h = "0" + h; }
-        m = Math.floor((currentTime/1000/60/60 - h)*60);
-        if (m <= 9) { m = "0" + m; }
-        s = Math.floor(((currentTime/1000/60/60 - h)*60 - m)*60);
-        if (s <= 9) { s = "0" + s; }
-        z = Math.floor((((currentTime/1000/60/60 - h)*60 - m)*60 - s)*1000);
-        if (z <= 9) { z = "00" + z; } else { if (z <= 99) { z = "0" + z; }; }
-        timerElement.innerHTML = `${h}:${m}:${s}.${z}`;
+        elapsedTime = currentTime;
+        var h,m,s,z;
+        function hh() { h = Math.floor(currentTime/1000/60/60); if (h <= 9) { h = "0" + h; }; }
+        function mm() { m = Math.floor((currentTime/1000/60/60 - h)*60); if (m <= 9) { m = "0" + m; }; }
+        function ss() { s = Math.floor(((currentTime/1000/60/60 - h)*60 - m)*60); if (s <= 9) { s = "0" + s; }; }
+        function zz() { z = Math.floor((((currentTime/1000/60/60 - h)*60 - m)*60 - s)*1000); if (z <= 9) { z = "00" + z; } else { if (z <= 99) { z = "0" + z; }; }; }
+        if (!restrictimer) { hh(); mm(); ss(); zz(); t = `${h}:${m}:${s}.${z}`; } else {
+          switch {
+            case (rate > 1000000):
+              hh(); var t = `${h}`;
+              break;
+            case (rate > 10000):
+              hh(); mm(); var t = `${h}:${m}`;
+              break;
+            case (rate > 100):
+              hh(); mm(); ss(); var t = `${h}:${m}:${s}`;
+              break;
+            case (rate > 10):
+              hh(); mm(); ss(); zz(); var t = `${h}:${m}:${s}.${z[0]}`;
+              break;
+            case (rate > 1):
+              hh(); mm(); ss(); zz(); var t = `${h}:${m}:${s}.${z[0]}${z[1]}`;
+              break;
+            default:
+              hh(); mm(); ss(); zz();
+              var t = `${h}:${m}:${s}.${z}`;
+          }
+        timerElement.innerHTML = t;
       }
     </script>
   </body>
