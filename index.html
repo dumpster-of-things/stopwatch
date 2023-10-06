@@ -5,7 +5,7 @@
       body { background-color: #00FF00; }
       ._ {
         background-color: transparent;
-        font-family: 'Comfortaa', sans-serif, 'Fira Code', monospace;
+        font-family: 'Fira Code', 'Ubuntu', 'Courier', monospace;
         font-size: 36px;
         color: #999693;
         text-shadow: 0px 2px 5px rgba(0, 0, 0, 0.5), 0px -2px 5px rgba(0, 0, 0, 0.5), -2px 0px 5px rgba(0, 0, 0, 0.5), 2px 0px 5px rgba(0, 0, 0, 0.5);
@@ -13,8 +13,8 @@
       }
       .stopwatch {
         position: fixed;
-        font-family: 'Fira Code', monospace, 'Comfortaa', sans-serif;
-        font-size: 42px;
+        font-family:  'Fira Code', 'Ubuntu', 'Courier', monospace;
+        font-size: 48px;
         color: #F3E6D9;
         text-shadow: 0px 2px 5px rgba(0, 0, 0, 0.5), 0px -2px 5px rgba(0, 0, 0, 0.5), -2px 0px 5px rgba(0, 0, 0, 0.5), 2px 0px 5px rgba(0, 0, 0, 0.5);
       }
@@ -22,7 +22,7 @@
     </style>
   </head>
   <body>
-    <button id=8 class="_" onclick="initimer(this)">H</button><button id=7 class="_" onclick="initimer(this)">H</button><a class="_">:</a><button id=6 class="_" onclick="initimer(this)">M</button><button id=5 class="_" onclick="initimer(this)">M</button><a class="_">:</a><button id=4 class="_" onclick="initimer(this)">S</button><button id=3 class="_" onclick="initimer(this)">S</button><a class="_">.</a><button id=2 class="_" onclick="initimer(this)">N</button><button id=1 class="_" onclick="initimer(this)">N</button><button id=0 class="_" onclick="initimer(this)">N</button>
+    <button id=8 class="_" onclick="initimer(this)">0</button><button id=7 class="_" onclick="initimer(this)">0</button><a class="_">:</a><button id=6 class="_" onclick="initimer(this)">0</button><button id=5 class="_" onclick="initimer(this)">0</button><a class="_">:</a><button id=4 class="_" onclick="initimer(this)">0</button><button id=3 class="_" onclick="initimer(this)">0</button><a class="_">.</a><button id=2 class="_" onclick="initimer(this)">0</button><button id=1 class="_" onclick="initimer(this)">0</button><button id=0 class="_" onclick="initimer(this)">0</button>
     <div id="timer" class="stopwatch" onclick="toggleTimer()">00:00:00:000</div>
     <script>
       var timerId;
