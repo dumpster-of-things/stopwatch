@@ -34,7 +34,8 @@
       var restrictimer = false;
       function oneTime(b) {
         if (timeout) clearTimeout(timeout);
-        timeout = setTimeout(initimer(b), 250);
+        timeout = setTimeout(250);
+        initimer(b);
       }
       function twoTimes(b) {
         clearTimeout(timeout);
