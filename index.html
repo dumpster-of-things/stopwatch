@@ -23,14 +23,27 @@
   </head>
   <body>
     <div id="timer" class="stopwatch" onclick="toggleTimer()">00:00:00.000</div>
-    <button id=8 class="_" ondblclick="setimer(this)" onclick="initimer(this)">0</button><button id=7 class="_" ondblclick="setimer(this)" onclick="initimer(this)">0</button><a class="_">:</a><button id=6 class="_" ondblclick="setimer(this)" onclick="initimer(this)">0</button><button id=5 class="_" ondblclick="setimer(this)" onclick="initimer(this)">0</button><a class="_">:</a><button id=4 class="_" ondblclick="setimer(this)" onclick="initimer(this)">0</button><button id=3 class="_" ondblclick="setimer(this)" onclick="initimer(this)">0</button><a class="_">.</a><button id=2 class="_" ondblclick="setimer(this)" onclick="initimer(this)">0</button><button id=1 class="_" ondblclick="setimer(this)" onclick="initimer(this)">0</button><button id=0 class="_" ondblclick="setimer(this)" onclick="initimer(this)">0</button>
+    <button id=8 class="_" ondblclick="twoTimes(this)" onclick="oneTime(this)">0</button><button id=7 class="_" ondblclick="twoTimes(this)" onclick="oneTime(this)">0</button><a class="_">:</a><button id=6 class="_" ondblclick="twoTimes(this)" onclick="oneTime(this)">0</button><button id=5 class="_" ondblclick="twoTimes(this)" onclick="oneTime(this)">0</button><a class="_">:</a><button id=4 class="_" ondblclick="twoTimes(this)" onclick="oneTime(this)">0</button><button id=3 class="_" ondblclick="twoTimes(this)" onclick="oneTime(this)">0</button><a class="_">.</a><button id=2 class="_" ondblclick="twoTimes(this)" onclick="oneTime(this)">0</button><button id=1 class="_" ondblclick="twoTimes(this)" onclick="oneTime(this)">0</button><button id=0 class="_" ondblclick="twoTimes(this)" onclick="oneTime(this)">0</button>
     <script>
+      var timeout;
       var timerId;
       var isRunning = false;
       var startTime;
       var elapsedTime = 0;
       var rate = 1000;
       var restrictimer = false;
+      function oneTime(b) {
+        if (timeout) clearTimeout(timeout);
+        timeout = setTimeout(initimer(b), 250);
+      }
+      function twoTimes(b) {
+        clearTimeout(timeout);
+        setimer(b);
+      }
+      function setimer(b) {
+        restrictimer = true;
+        initimer(b);
+      }
       function initimer(b) {
         rate = b.id < 1 ? 1 : 10**b.id ;
         elements = document.getElementsByClassName(b.className);
@@ -39,10 +52,6 @@
         }
         document.getElementById("timer").style.display = "unset";
         toggleTimer();
-      }
-      function setimer(b) {
-        restrictimer = true;
-        //initimer(b)
       }
       function toggleTimer() {
         if (isRunning) {
